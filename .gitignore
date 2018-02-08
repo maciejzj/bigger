@@ -1,0 +1,6 @@
+# ignore swp fil (mainly from vim)
+*.swp
+
+# ignore files created by macOS
+.DS_Store
+
