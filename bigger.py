@@ -6,6 +6,13 @@ from ScriptingBridge import SBApplication
 terminal=SBApplication.applicationWithBundleIdentifier_("com.apple.Terminal")
 t_window=terminal.windows()[0]
 
+# finds current screen and sets its frame to pFrame
+i=0
+pFrame = NSScreen.screens()[i].frame()
+while(not((t_window.position().x > pFrame.origin.x) and (t_window.position().x < pFrame.origin.x + pFrame.size.width))):
+	i=i+1
+	pFrame = NSScreen.screens()[i].frame()
+
 if sys.argv[1]=="c":
 	screen_height = NSScreen.mainScreen().frame().size.height
 	screen_width = NSScreen.mainScreen().frame().size.width
@@ -26,7 +33,6 @@ elif sys.argv[1]=="b":
 	factor=2
 	screen_height = NSScreen.mainScreen().frame().size.height
 	screen_width = NSScreen.mainScreen().frame().size.width
-	
 	s_x=570*factor
 	s_y=390*factor
 	new_x=(screen_width-s_x)/2
