@@ -23,8 +23,8 @@ p_x=t_window.position().x
 p_y=t_window.position().y
 
 # get screen size
-screen_height = NSScreen.mainScreen().frame().size.height
-screen_width = NSScreen.mainScreen().frame().size.width
+screen_height = pFrame.size.height
+screen_width = pFrame.size.width
 
 # resizes screen
 # medium
@@ -54,8 +54,15 @@ elif sys.argv[1]=="s":
 
 # centers screen for c and b options
 if (sys.argv[1]=="c" or sys.argv[1]=="b"):	
-	new_x=screen_width/2-s_x/2
-	new_y=screen_height/2-s_y/2-15
+	if p_x < 0:
+		new_x=-screen_width/2-s_x/2
+	else:
+		new_x=screen_width/2-s_x/2
+
+	if p_y < 0:
+		new_y=-screen_height/2-s_y/2-15
+	else:
+		new_y=screen_height/2-s_y/2-15
 	toPrint=toPrint + "Window centered"
 
 t_window.setBounds_([[new_x, new_y], [s_x, s_y]])
