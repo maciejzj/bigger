@@ -2,6 +2,7 @@
 import sys
 from AppKit import NSScreen
 from ScriptingBridge import SBApplication
+from math import fabs
 
 terminal=SBApplication.applicationWithBundleIdentifier_("com.apple.Terminal")
 t_window=terminal.windows()[0]
@@ -14,17 +15,20 @@ while(not((t_window.position().x > pFrame.origin.x) and (t_window.position().x <
 	i=i+1
 	pFrame = NSScreen.screens()[i].frame()
 
-# get window size
+print(pFrame)
+# get window properties
 s_x=t_window.size().x
 s_y=t_window.size().y
 
-# get window position
 p_x=t_window.position().x
 p_y=t_window.position().y
 
-# get screen size
+# get screen properties
 screen_height = pFrame.size.height
 screen_width = pFrame.size.width
+
+screen_origin_x = pFrame.origin.x
+screen_origin_y = pFrame.origin.y
 
 # resizes screen
 # medium
@@ -54,15 +58,9 @@ elif sys.argv[1]=="s":
 
 # centers screen for c and b options
 if (sys.argv[1]=="c" or sys.argv[1]=="b"):	
-	if p_x < 0:
-		new_x=-screen_width/2-s_x/2
-	else:
-		new_x=screen_width/2-s_x/2
-
-	if p_y < 0:
-		new_y=-screen_height/2-s_y/2-15
-	else:
-		new_y=screen_height/2-s_y/2-15
+	new_x=screen_origin_x+screen_width/2-s_x/2
+	new_y=+screen_height/2-s_y/2-15
+	
 	toPrint=toPrint + "Window centered"
 
 t_window.setBounds_([[new_x, new_y], [s_x, s_y]])
