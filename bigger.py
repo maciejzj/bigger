@@ -9,13 +9,14 @@ t_window=terminal.windows()[0]
 toPrint=""
 
 # finds current screen and sets its frame to pFrame
-i=0
-pFrame = NSScreen.screens()[i].frame()
-while(not((t_window.position().x > pFrame.origin.x) and (t_window.position().x < pFrame.origin.x + pFrame.size.width))):
-	i=i+1
-	pFrame = NSScreen.screens()[i].frame()
+pFrame = None		
+for screen in NSScreen.screens():
+	if ((t_window.position().x > screen.frame().origin.x) and 
+		(t_window.position().x < screen.frame().origin.x + screen.frame().size.width)):
+		
+		pFrame = screen.frame()
+		break	
 
-print(pFrame)
 # get window properties
 s_x=t_window.size().x
 s_y=t_window.size().y
