@@ -9,13 +9,17 @@ t_window=terminal.windows()[0]
 toPrint=""
 
 # finds current screen and sets its frame to pFrame
-pFrame = None		
 for screen in NSScreen.screens():
-	if ((t_window.position().x > screen.frame().origin.x) and 
-		(t_window.position().x < screen.frame().origin.x + screen.frame().size.width)):
-		
-		pFrame = screen.frame()
-		break	
+		# check if corner is further left than the left border
+		# if so this may be the leftmost screen
+		if (t_window.position().x < screen.frame().origin.x):
+			pFrame = screen.frame()
+
+		# if not too far left (checked above) and not too far right
+		# (checked below) it must be this screen, so break searching
+		elif (t_window.position().x < screen.frame().origin.x + screen.frame().size.width):
+			pFrame = screen.frame()
+			break
 
 # get window properties
 s_x=t_window.size().x
