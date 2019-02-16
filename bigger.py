@@ -4,22 +4,31 @@ from AppKit import NSScreen
 from ScriptingBridge import SBApplication
 from math import fabs
 
+if not len(sys.argv) == 2 or not sys.argv[1] in ['s', 'm', 'b', 'c']:
+    print """  Invalid argument. 
+    Proper options are:
+    ss - small
+    sm -  medium
+    sb - large
+    sc - center""" 
+    sys.exit(1) # Abort because of error
+
 terminal = SBApplication.applicationWithBundleIdentifier_("com.apple.Terminal")
 t_window = terminal.windows()[0]
 toPrint = ""
 
 # Finds current screen and sets its frame to pFrame
 for screen in NSScreen.screens():
-		# Check if corner is further left than the left border
-		# if so this may be the leftmost screen
-		if (t_window.position().x < screen.frame().origin.x):
-			pFrame = screen.frame()
+    # Check if corner is further left than the left border
+    # if so this may be the leftmost screen
+    if (t_window.position().x < screen.frame().origin.x):
+        pFrame = screen.frame()
 
-		# If not too far left (checked above) and not too far right
-		# (checked below) it must be this screen, so break searching
-		elif (t_window.position().x < screen.frame().origin.x + screen.frame().size.width):
-			pFrame = screen.frame()
-			break
+    # If not too far left (checked above) and not too far right
+    # (checked below) it must be this screen, so break searching
+    elif (t_window.position().x < screen.frame().origin.x + screen.frame().size.width):
+        pFrame = screen.frame()
+        break
 
 # Get window properties
 s_x = t_window.size().x
