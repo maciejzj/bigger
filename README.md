@@ -1,4 +1,4 @@
-# bigger
+# Bigger
 Very simple python script that changes terminal size in macOS. Works with one or two screens set horizontally.
 
 ## Installation
